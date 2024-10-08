@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Dashboard</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+    </head>
+    <body>
+    <div class="container">
+        <h1 th:text="${repoName} + ' Dashboard'">Repository Dashboard</h1>
+
+        <!-- Sonar Metrics Section -->
+        <div>
+            <h2>SonarQube Metrics</h2>
+            <ul>
+                <li>Major Issues: <span th:text="${sonarMetrics.majorViolations}"></span></li>
+                <li>Critical Issues: <span th:text="${sonarMetrics.criticalViolations}"></span></li>
+                <li>Code Coverage: <span th:text="${sonarMetrics.codeCoverage}"></span></li>
+                <li>Test Coverage: <span th:text="${sonarMetrics.testCoverage}"></span></li>
+            </ul>
+        </div>
+
+        <!-- SAST/DAST Section -->
+        <div>
+            <h2>SAST/DAST Reports</h2>
+            <ul>
+                <li>Security Vulnerabilities: <span th:text="${securityMetrics.vulnerabilities}"></span></li>
+                <!-- Add more metrics as needed -->
+            </ul>
+        </div>
+
+        <!-- AWS CodePipeline Section -->
+        <div>
+            <h2>AWS CodePipeline Status</h2>
+            <ul>
+                <li th:each="build : ${builds}">
+                    Build Status: <span th:text="${build.status}"></span>
+                    <span th:text="${build.timestamp}"></span>
+                    <!-- Highlight failures -->
+                </li>
+            </ul>
+        </div>
+
+        <!-- GitHub PRs Section -->
+        <div>
+            <h2>Old Pull Requests</h2>
+            <ul>
+                <li th:each="pr : ${pullRequests}">
+                    <span th:text="${pr.title}"></span>
+                    Created At: <span th:text="${pr.createdAt}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Merged Branches Section -->
+        <div>
+            <h2>Idle Merged Branches</h2>
+            <ul>
+                <li th:each="branch : ${mergedBranches}">
+                    <span th:text="${branch.name}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </body>
+</html>
